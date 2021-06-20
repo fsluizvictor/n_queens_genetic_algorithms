@@ -1,4 +1,5 @@
 from abc import ABC
+from random import shuffle
 from typing import List, Optional
 
 from src.interfaces.individual import Individual
@@ -12,7 +13,8 @@ class NQueens(Individual):
         # inicializar o tamanho do vetor de genes e seus valores de forma aleatória
         # os valores aleatórios devem obedecer a ideia da permutação
         self._amount_queens = amount_queens
-        self._genes = None
+        self._genes = [i for i in range(self._amount_queens)]
+        shuffle(self._genes)
 
     @property
     def amount_queens(self):
@@ -30,14 +32,4 @@ class NQueens(Individual):
     def genes(self, genes: List[int]):
         self._genes = genes
 
-    def recombine(self, individual: ABC) -> List[ABC]:
-        # recombinar os individuos self e p2 gerando 2 filhos utilizando a ideia de permutação
-        pass
 
-    def mutate(self) -> ABC:
-        # gerar um novo individuo mutante com os genes do individuo self mutados e uma taxa de mutação de 10% à 5%
-        pass
-
-    def to_rate(self) -> float:
-        # realizar a contagem de colisões que ocorrem entre as rainhas.
-        pass

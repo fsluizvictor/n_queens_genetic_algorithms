@@ -1,7 +1,7 @@
 from src.models.n_queens import NQueens
 
 
-class NQueenDao(object):
+class NQueensDao(object):
     _amount_queens: int
 
     def __init__(self, amount_queens):

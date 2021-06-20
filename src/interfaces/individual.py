@@ -24,7 +24,11 @@ class Individual(ABC):
 
     @property
     def rate(self):
-        return self._rate
+        if not self.rated:
+            self.rated(True)
+            self.rate(self.to_rate())
+
+        return self.rate
 
     @rate.setter
     def rate(self, rate: float):
@@ -37,12 +41,6 @@ class Individual(ABC):
     @reated.setter
     def reated(self, rated: bool):
         self._rated = rated
-
-    def find_rate(self):
-        if not self.rate:
-            self.rate = self.to_rate()
-
-        return self.rate
 
     @property
     def is_minimize(self):
