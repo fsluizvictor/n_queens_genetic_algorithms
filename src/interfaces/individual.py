@@ -5,6 +5,10 @@ from typing import List
 class Individual(ABC):
     _rate: float
     _rated: bool
+    _is_minimize: bool
+
+    def __init__(self):
+        pass
 
     @abstractmethod
     def recombine(self, individual: ABC) -> List[ABC]:
@@ -39,3 +43,11 @@ class Individual(ABC):
             self.rate = self.to_rate()
 
         return self.rate
+
+    @property
+    def is_minimize(self):
+        return self._is_minimize
+
+    @is_minimize.setter
+    def is_minimize(self, is_minimize: bool):
+        self._is_minimize = is_minimize

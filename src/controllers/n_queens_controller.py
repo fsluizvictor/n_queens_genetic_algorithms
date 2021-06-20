@@ -1,0 +1,2 @@
+class NQueensController:
+    pass
