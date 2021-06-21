@@ -19,7 +19,7 @@ class Individual(ABC):
         pass
 
     @abstractmethod
-    def to_rate(self) -> float:
+    def to_rate(self) -> int:
         pass
 
     @property
