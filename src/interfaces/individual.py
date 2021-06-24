@@ -3,12 +3,11 @@ from typing import List
 
 
 class Individual(ABC):
-    _rate: float
-    _rated: bool
-    _is_minimize: bool
 
     def __init__(self):
-        pass
+        self.rate = None
+        self.rated = None
+        self.is_minimize = True
 
     @abstractmethod
     def recombine(self, individual: ABC) -> List[ABC]:
@@ -24,8 +23,8 @@ class Individual(ABC):
 
     @property
     def rate(self):
-        if not self.rated:
-            self.rated(True)
+        if not self._rated:
+            self._rated = True
             self.rate(self.to_rate())
 
         return self.rate
