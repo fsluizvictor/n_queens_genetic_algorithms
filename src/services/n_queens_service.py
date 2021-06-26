@@ -14,6 +14,10 @@ class NQueensService():
     # [i for i in range(self._amount_queens)]
     # recombinar os individuos self e p2 gerando 2 filhos utilizando a ideia de permutação
     def recombine(self, first_individual: NQueens, second_individual: NQueens) -> List[NQueens]:
+
+        self.show_and_update_rate(first_individual)
+        self.show_and_update_rate(second_individual)
+
         first_son = self._without_repetition(first_individual.genes, second_individual.genes)
         second_son = self._without_repetition(second_individual.genes, first_individual.genes)
         return [NQueens(8, first_son), NQueens(8, second_son)]
@@ -21,6 +25,9 @@ class NQueensService():
     # gerar um novo individuo mutante com os genes do individuo self mutados e uma taxa de mutação de 5% a 10%
     # --> se maior que noventa deve sofrer mutação
     def mutate(self, individual: NQueens) -> NQueens:
+
+        self.show_and_update_rate(individual)
+
         mutate_genes = [i for i in range(len(individual.genes))]
         for i in range(len(individual.genes)):
             mutation_rate = random.randint(1, 100)
@@ -65,3 +72,9 @@ class NQueensService():
                 new_genes.append(assistent_array[i])
 
         return new_genes
+
+    def show_and_update_rate(self, individual: NQueens):
+        if not individual.rated:
+            individual.rated(True)
+            collisions = self.to_rate(individual)
+            individual.rate(collisions)
