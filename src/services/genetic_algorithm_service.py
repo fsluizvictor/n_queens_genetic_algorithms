@@ -3,6 +3,7 @@ import sys
 import random
 from typing import List, Optional
 
+from src import config
 from src.models.n_queens import NQueens
 from src.services.n_queens_service import NQueensService
 from src.view.view_data import ViewData
@@ -14,7 +15,7 @@ class GeneticAlgorithmService(object):
         self.service = service
         self.view = view
 
-    def execute(self, amount_steps: Optional[int] = 10000, amount_individuals: Optional[int] = 20):
+    def execute(self, amount_steps: Optional[int] = 1000, amount_individuals: Optional[int] = 20):
 
         initial_population = list()
         for i in range(amount_individuals):
@@ -36,7 +37,8 @@ class GeneticAlgorithmService(object):
 
             self._show_worse_individual(s, recalculing_all_population)
 
-            individuals_selected = self.selection(recalculing_all_population, 16, 4)
+            individuals_selected = self.selection(recalculing_all_population, config.AMOUNT_ROULETTE,
+                                                  config.AMOUNT_ELIT)
 
             self._show_better_individual(s, individuals_selected)
 
@@ -117,8 +119,6 @@ class GeneticAlgorithmService(object):
             individuals_population[i].old_rate = new_rate
 
         return individuals_population
-
-
 
     def _show_better_individual(self, generation: int, individual_population: List[NQueens]):
         better_individual = NQueens()

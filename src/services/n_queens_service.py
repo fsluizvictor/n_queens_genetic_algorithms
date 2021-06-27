@@ -1,7 +1,6 @@
 import random
 from typing import Optional, List
 
-from src.dao.n_queens_dao import NQueensDao
 from src.models.n_queens import NQueens
 
 
@@ -9,7 +8,6 @@ class NQueensService:
 
     def __init__(self, amount_queens: Optional[int] = 8):
         self._amount_queens = amount_queens
-        self._dao = NQueensDao(amount_queens)
 
     def recombine(self, first_individual: NQueens, second_individual: NQueens) -> List[NQueens]:
 

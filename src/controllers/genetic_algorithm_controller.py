@@ -1,3 +1,4 @@
+from src import config
 from src.services.genetic_algorithm_service import GeneticAlgorithmService
 from src.services.n_queens_service import NQueensService
 from src.view.view_data import ViewData
@@ -11,4 +12,4 @@ class GeneticAlgotithmController:
         self.genetic_algorithm_service = GeneticAlgorithmService(self.n_queens_service, self.view)
 
     def run_genetic_algorithm(self):
-        self.genetic_algorithm_service.execute()
+        self.genetic_algorithm_service.execute(config.GENERATION_STEPS, config.AMOUNT_QUEENS)
