@@ -11,16 +11,12 @@ class NQueensService:
         self._amount_queens = amount_queens
         self._dao = NQueensDao(amount_queens)
 
-    # [i for i in range(self._amount_queens)]
-    # recombinar os individuos self e p2 gerando 2 filhos utilizando a ideia de permutação
     def recombine(self, first_individual: NQueens, second_individual: NQueens) -> List[NQueens]:
 
         first_son = self._without_repetition(first_individual.genes, second_individual.genes)
         second_son = self._without_repetition(second_individual.genes, first_individual.genes)
         return [NQueens(8, first_son), NQueens(8, second_son)]
 
-    # gerar um novo individuo mutante com os genes do individuo self mutados e uma taxa de mutação de 5% a 10%
-    # --> se maior que noventa deve sofrer mutação
     def mutate(self, individual: NQueens) -> NQueens:
 
         mutate_genes = [i for i in range(len(individual.genes))]
@@ -39,13 +35,12 @@ class NQueensService:
                 mutate_genes.insert(i, individual.genes[i])
         return NQueens(8, mutate_genes)
 
-    # realizar a contagem de colisões que ocorrem entre as rainhas.
     def to_rate(self, individual: NQueens) -> float:
         collisions = 0.0
         genes = individual.genes
         for i in range(len(genes)):
-            for j in range(len(genes)):
-                if genes[i] == genes[j] or genes[i] == genes[j] + (j - i) or genes[i] == genes[j] - (j - i):
+            for j in range(i + 1, len(genes)):
+                if genes[i] == genes[j] or i - genes[i] == j - genes[j] or i + genes[i] == j + genes[j]:
                     collisions += 1
 
         return float(collisions)

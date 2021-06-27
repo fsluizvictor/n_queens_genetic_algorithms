@@ -6,8 +6,7 @@ class NQueens(object):
 
     def __init__(self, amount_queens: Optional[int] = 8, genes: Optional[List[int]] = None, rate: Optional[float] = 0,
                  is_rated: Optional[bool] = False):
-        # inicializar o tamanho do vetor de genes e seus valores de forma aleatória
-        # os valores aleatórios devem obedecer a ideia da permutação
+
         self._amount_queens = amount_queens
         if genes:
             self._genes = genes
