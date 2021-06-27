@@ -43,8 +43,8 @@ class NQueensService:
     def to_rate(self, individual: NQueens) -> float:
         collisions = 0.0
         genes = individual.genes
-        for i in genes:
-            for j in genes:
+        for i in range(len(genes)):
+            for j in range(len(genes)):
                 if genes[i] == genes[j] or genes[i] == genes[j] + (j - i) or genes[i] == genes[j] - (j - i):
                     collisions += 1
 
@@ -68,6 +68,6 @@ class NQueensService:
         return new_genes
 
     def show_and_update_rate(self, individual: NQueens) -> float:
-        if not individual.is_rated:
-            individual.is_rated = True
-            return self.to_rate(individual)
+        # if not individual.rated:
+        # individual.is_rated = True
+        return self.to_rate(individual)

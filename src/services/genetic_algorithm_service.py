@@ -19,10 +19,11 @@ class GeneticAlgorithmService(object):
         # fazer um for para preencher uma lista popIni com o nInd(individuos)
         # para gerar os incdividuos
         # iniciar utilizar o individuo factory passado por parametro
+        initial_population = list()
+        for i in range(amount_individuals):
+            initial_population.append(NQueens())
+
         for s in range(amount_steps):
-            initial_population = list()
-            for i in range(amount_individuals):
-                initial_population.append(NQueens())
 
             sons_population = self._generate_sons(initial_population)
             mutants_population = self._generate_mutants(initial_population)

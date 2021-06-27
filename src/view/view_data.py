@@ -9,7 +9,7 @@ class ViewData:
 
     def show_better_individual(self, step_generation: int, individual: NQueens):
         print('==============================================')
-        print('===============BETTER INDIVIDUL===============')
+        print('===============BETTER INDIVIDUAL===============')
         print('GENERATION : ', step_generation)
         print('Collisions : {:.2f}'.format(individual.old_rate))
         print('Collisions : {:.2f}'.format(individual.rate))
@@ -19,7 +19,7 @@ class ViewData:
 
     def show_worse_individual(self, step_generation: int, individual: NQueens):
         print('==============================================')
-        print('===============WORSE INDIVIDUL================')
+        print('===============WORSE INDIVIDUAL================')
         print('GENERATION : ', step_generation)
         print('Collisions : {:.2f}'.format(individual.old_rate))
         print('Collisions : {:.2f}'.format(individual.rate))
