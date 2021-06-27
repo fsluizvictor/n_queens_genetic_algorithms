@@ -16,6 +16,7 @@ class NQueens(object):
         shuffle(self._genes)
         self._rate = rate
         self._is_rated = is_rated
+        self._old_rate = rate
 
     @property
     def amount_queens(self):
@@ -48,3 +49,7 @@ class NQueens(object):
     @is_rated.setter
     def is_rated(self, is_rated: bool):
         self._is_rated = is_rated
+
+    @property
+    def old_rate(self):
+        return self._old_rate
