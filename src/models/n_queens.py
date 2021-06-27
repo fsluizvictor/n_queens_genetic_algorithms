@@ -1,14 +1,11 @@
-from abc import ABC
 from random import shuffle
 from typing import List, Optional
-
-from src.interfaces.individual import Individual
 
 
 class NQueens(object):
 
-    def __init__(self, amount_queens: Optional[int] = 8, genes: Optional[List[int]] = None, rate: Optional[int] = 0,
-                 rated: Optional[bool] = False):
+    def __init__(self, amount_queens: Optional[int] = 8, genes: Optional[List[int]] = None, rate: Optional[float] = 0,
+                 is_rated: Optional[bool] = False):
         # inicializar o tamanho do vetor de genes e seus valores de forma aleatória
         # os valores aleatórios devem obedecer a ideia da permutação
         self._amount_queens = amount_queens
@@ -17,8 +14,8 @@ class NQueens(object):
         else:
             self._genes = [i for i in range(self._amount_queens)]
         shuffle(self._genes)
-        self.rate = rate
-        self.rated = rated
+        self._rate = rate
+        self._is_rated = is_rated
 
     @property
     def amount_queens(self):
@@ -38,16 +35,16 @@ class NQueens(object):
 
     @property
     def rate(self):
-        return self.rate
+        return self._rate
 
     @rate.setter
     def rate(self, rate: int):
-        self.rate = rate
+        self._rate = rate
 
     @property
-    def rated(self):
-        return self.rated
+    def is_rated(self):
+        return self._is_rated
 
-    @rated.setter
-    def rated(self, rated: bool):
-        self.rated = rated
+    @is_rated.setter
+    def is_rated(self, is_rated: bool):
+        self._is_rated = is_rated

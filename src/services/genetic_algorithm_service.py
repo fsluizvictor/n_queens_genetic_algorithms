@@ -1,6 +1,6 @@
+import operator
 import sys
 import random
-import sorted
 from typing import List, Optional
 
 from src.interfaces.individual import Individual
@@ -9,7 +9,7 @@ from src.services.n_queens_service import NQueensService
 from src.view.view_data import ViewData
 
 
-class GeneticAlgorithmService:
+class GeneticAlgorithmService(object):
 
     def __init__(self, service: NQueensService, view: ViewData):
         self.service = service
@@ -34,17 +34,19 @@ class GeneticAlgorithmService:
                 all_population.append(sons_population[i])
                 all_population.append(mutants_population[i])
 
-            individuals_selected = self.selection(all_population, 16, 4)
+            recalculing_all_population = self.recalculing_rate(all_population)
 
-            self.show_better_individual(amount_steps, individuals_selected)
+            individuals_selected = self.selection(recalculing_all_population, 16, 4)
+
+            self.show_better_individual(s, individuals_selected)
 
     # imprimir o numero da geração, o melhor individuo e a avaliação deste melhor individuo
     # levar em consideração se o problema é de minimização ou maximização
     def show_better_individual(self, generation: int, individual_population: List[NQueens]):
         better_individual = NQueens()
-        better_individual.rate(sys.maxsize)
+        better_individual.rate = sys.maxsize
         for i in range(len(individual_population)):
-            if individual_population[i].rate > better_individual.rate:
+            if individual_population[i].rate < better_individual.rate:
                 better_individual = individual_population[i]
 
         self.view.show_better_individual(generation, better_individual)
@@ -105,31 +107,28 @@ class GeneticAlgorithmService:
 
     def _elitism(self, individuals_population: List[NQueens], amount_elitism: int) -> List[NQueens]:
         four_individuals = list()
-        sorted_individuals_population = sorted(individuals_population, key=NQueens.rate)
+        individuals_population.sort(key=operator.attrgetter('rate'))
         for i in range(amount_elitism):
-            four_individuals.append(sorted_individuals_population[i])
+            four_individuals.append(individuals_population[i])
 
         return four_individuals
 
     def _addited_roulette(self, individuals_population: List[NQueens], amount_individual: int) -> List[NQueens]:
         for i in range(len(individuals_population)):
             new_rate = 1 / individuals_population[i].rate
-            individuals_population[i].rate(new_rate)
+            individuals_population[i].rate = new_rate
 
         individuals_drawn = list()
 
         for i in range(amount_individual):
             sum_rate = 0.0
-            sum_rate += [r.rate for r in individuals_population]
-
+            for s in range(len(individuals_population)):
+                sum_rate += individuals_population[s].rate
+            random_rate = random.uniform(0.0, sum_rate)
             aux_sum_rate = 0.0
 
-            random_rate = random.uniform(0.0, sum_rate)
-
             for j in range(len(individuals_population)):
-
                 aux_sum_rate += individuals_population[j].rate
-
                 if aux_sum_rate >= random_rate:
                     individual = individuals_population[j]
                     individuals_drawn.append(individual)
@@ -137,3 +136,10 @@ class GeneticAlgorithmService:
                     break
 
         return individuals_drawn
+
+    def recalculing_rate(self, individuals_population: List[NQueens]):
+        for i in range(len(individuals_population)):
+            new_rate = self.service.show_and_update_rate(individuals_population[i])
+            individuals_population[i].rate = new_rate
+
+        return individuals_population

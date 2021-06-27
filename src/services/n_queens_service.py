@@ -5,7 +5,7 @@ from src.dao.n_queens_dao import NQueensDao
 from src.models.n_queens import NQueens
 
 
-class NQueensService():
+class NQueensService:
 
     def __init__(self, amount_queens: Optional[int] = 8):
         self._amount_queens = amount_queens
@@ -15,9 +15,6 @@ class NQueensService():
     # recombinar os individuos self e p2 gerando 2 filhos utilizando a ideia de permutação
     def recombine(self, first_individual: NQueens, second_individual: NQueens) -> List[NQueens]:
 
-        self.show_and_update_rate(first_individual)
-        self.show_and_update_rate(second_individual)
-
         first_son = self._without_repetition(first_individual.genes, second_individual.genes)
         second_son = self._without_repetition(second_individual.genes, first_individual.genes)
         return [NQueens(8, first_son), NQueens(8, second_son)]
@@ -26,13 +23,11 @@ class NQueensService():
     # --> se maior que noventa deve sofrer mutação
     def mutate(self, individual: NQueens) -> NQueens:
 
-        self.show_and_update_rate(individual)
-
         mutate_genes = [i for i in range(len(individual.genes))]
         for i in range(len(individual.genes)):
             mutation_rate = random.randint(1, 100)
             if mutation_rate > 90:
-                mutant_index = random.randint(i + 1, len(individual.genes) - 1)
+                mutant_index = random.randint(i, len(individual.genes) - 1)
                 gene = individual.genes[i]
                 mutant = individual.genes[mutant_index]
                 mutate_genes.remove(mutant)
@@ -45,16 +40,15 @@ class NQueensService():
         return NQueens(8, mutate_genes)
 
     # realizar a contagem de colisões que ocorrem entre as rainhas.
-    def to_rate(self, individual: NQueens) -> int:
-        collisions = 0
+    def to_rate(self, individual: NQueens) -> float:
+        collisions = 0.0
         genes = individual.genes
-        print(genes)
         for i in genes:
             for j in genes:
                 if genes[i] == genes[j] or genes[i] == genes[j] + (j - 1) or genes[i] == genes[j] - (j - 1):
                     collisions += 1
 
-        return collisions
+        return float(collisions)
 
     def _without_repetition(self, first_genes: List[int], second_genes: List[int]) -> List[int]:
         assistent_array = [i for i in range(self._amount_queens)]
@@ -73,8 +67,7 @@ class NQueensService():
 
         return new_genes
 
-    def show_and_update_rate(self, individual: NQueens):
-        if not individual.rated:
-            individual.rated(True)
-            collisions = self.to_rate(individual)
-            individual.rate(collisions)
+    def show_and_update_rate(self, individual: NQueens) -> float:
+        if not individual.is_rated:
+            individual.is_rated = True
+            return self.to_rate(individual)

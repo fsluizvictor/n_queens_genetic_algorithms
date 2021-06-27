@@ -13,8 +13,8 @@ class ViewData:
 
     def show_better_individual(self, step_generation: int, individual: NQueens):
         print("==============================================")
-        print("GENERATION : %s", step_generation)
-        print("Collisions : %s", individual.rate)
+        print("GENERATION : ", step_generation)
+        print("Collisions : ", individual.rate)
         print("Genes : ")
         print(individual.genes)
         print("==============================================")
