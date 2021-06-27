@@ -53,3 +53,7 @@ class NQueens(object):
     @property
     def old_rate(self):
         return self._old_rate
+
+    @old_rate.setter
+    def old_rate(self, old_rate: float):
+        self._old_rate = old_rate

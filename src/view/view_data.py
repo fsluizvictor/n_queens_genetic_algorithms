@@ -7,24 +7,22 @@ class ViewData:
     def __init__(self):
         pass
 
-    def show_list(self, list_genes: List[int]):
-        print("Genes : ")
-        print(list_genes)
-
     def show_better_individual(self, step_generation: int, individual: NQueens):
-        print("==============================================")
-        print("===============BETTER INDIVIDUL===============")
-        print("GENERATION : ", step_generation)
-        print("Collisions : ", individual.old_rate)
-        print("Genes : ")
+        print('==============================================')
+        print('===============BETTER INDIVIDUL===============')
+        print('GENERATION : ', step_generation)
+        print('Collisions : {:.2f}'.format(individual.old_rate))
+        print('Collisions : {:.2f}'.format(individual.rate))
+        print('Genes : ')
         print(individual.genes)
-        print("==============================================")
+        print('==============================================')
 
     def show_worse_individual(self, step_generation: int, individual: NQueens):
-        print("==============================================")
-        print("===============WORSE INDIVIDUL================")
-        print("GENERATION : ", step_generation)
-        print("Collisions : ", individual.old_rate)
-        print("Genes : ")
+        print('==============================================')
+        print('===============WORSE INDIVIDUL================')
+        print('GENERATION : ', step_generation)
+        print('Collisions : {:.2f}'.format(individual.old_rate))
+        print('Collisions : {:.2f}'.format(individual.rate))
+        print('Genes : ')
         print(individual.genes)
-        print("==============================================")
+        print('==============================================')

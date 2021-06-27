@@ -15,7 +15,7 @@ class GeneticAlgorithmService(object):
         self.service = service
         self.view = view
 
-    def execute(self, amount_steps: Optional[int] = 100, amount_individuals: Optional[int] = 20):
+    def execute(self, amount_steps: Optional[int] = 10000, amount_individuals: Optional[int] = 20):
         # fazer um for para preencher uma lista popIni com o nInd(individuos)
         # para gerar os incdividuos
         # iniciar utilizar o individuo factory passado por parametro
@@ -132,6 +132,7 @@ class GeneticAlgorithmService(object):
         for i in range(len(individuals_population)):
             new_rate = self.service.show_and_update_rate(individuals_population[i])
             individuals_population[i].rate = new_rate
+            individuals_population[i].old_rate = new_rate
 
         return individuals_population
 
@@ -142,7 +143,7 @@ class GeneticAlgorithmService(object):
         better_individual = NQueens()
         better_individual.rate = sys.maxsize
         for i in range(len(individual_population)):
-            if individual_population[i].rate < better_individual.rate:
+            if individual_population[i].old_rate < better_individual.rate:
                 better_individual = individual_population[i]
 
         self.view.show_better_individual(generation, better_individual)
@@ -152,7 +153,7 @@ class GeneticAlgorithmService(object):
         worse_individual.rate = sys.maxsize * (-1)
 
         for i in range(len(individual_population)):
-            if individual_population[i].rate > worse_individual.rate:
+            if individual_population[i].old_rate > worse_individual.rate:
                 worse_individual = individual_population[i]
 
         self.view.show_worse_individual(generation, worse_individual)

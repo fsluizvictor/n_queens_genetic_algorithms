@@ -45,7 +45,7 @@ class NQueensService:
         genes = individual.genes
         for i in genes:
             for j in genes:
-                if genes[i] == genes[j] or genes[i] == genes[j] + (j - 1) or genes[i] == genes[j] - (j - 1):
+                if genes[i] == genes[j] or genes[i] == genes[j] + (j - i) or genes[i] == genes[j] - (j - i):
                     collisions += 1
 
         return float(collisions)
