@@ -15,7 +15,7 @@ class GeneticAlgorithmService(object):
         self.service = service
         self.view = view
 
-    def execute(self, amount_steps: Optional[int] = 10000, amount_individuals: Optional[int] = 20):
+    def execute(self, amount_steps: Optional[int] = 100, amount_individuals: Optional[int] = 20):
         # fazer um for para preencher uma lista popIni com o nInd(individuos)
         # para gerar os incdividuos
         # iniciar utilizar o individuo factory passado por parametro
@@ -34,26 +34,13 @@ class GeneticAlgorithmService(object):
                 all_population.append(sons_population[i])
                 all_population.append(mutants_population[i])
 
-            recalculing_all_population = self.recalculing_rate(all_population)
+            recalculing_all_population = self._recalculing_rate(all_population)
+
+            self._show_worse_individual(s, recalculing_all_population)
 
             individuals_selected = self.selection(recalculing_all_population, 16, 4)
 
-            self.show_better_individual(s, individuals_selected)
-
-    # imprimir o numero da geração, o melhor individuo e a avaliação deste melhor individuo
-    # levar em consideração se o problema é de minimização ou maximização
-    def show_better_individual(self, generation: int, individual_population: List[NQueens]):
-        better_individual = NQueens()
-        better_individual.rate = sys.maxsize
-        worse_individual = sys.maxsize * (-1)
-        for i in range(len(individual_population)):
-            if individual_population[i].rate < better_individual.rate:
-                better_individual = individual_population[i]
-            if individual_population[i].rate > worse_individual[i].rate:
-                worse_individual = individual_population[i]
-
-        self.view.show_better_individual(generation, better_individual)
-        self.view.show_worse_individual(generation, worse_individual)
+            self._show_better_individual(s, individuals_selected)
 
     def selection(self, individual_population: List[NQueens], amount_individual: int, amount_elitism: int) -> List[
         NQueens]:
@@ -141,9 +128,31 @@ class GeneticAlgorithmService(object):
 
         return individuals_drawn
 
-    def recalculing_rate(self, individuals_population: List[NQueens]):
+    def _recalculing_rate(self, individuals_population: List[NQueens]):
         for i in range(len(individuals_population)):
             new_rate = self.service.show_and_update_rate(individuals_population[i])
             individuals_population[i].rate = new_rate
 
         return individuals_population
+
+        # imprimir o numero da geração, o melhor individuo e a avaliação deste melhor individuo
+        # levar em consideração se o problema é de minimização ou maximização
+
+    def _show_better_individual(self, generation: int, individual_population: List[NQueens]):
+        better_individual = NQueens()
+        better_individual.rate = sys.maxsize
+        for i in range(len(individual_population)):
+            if individual_population[i].rate < better_individual.rate:
+                better_individual = individual_population[i]
+
+        self.view.show_better_individual(generation, better_individual)
+
+    def _show_worse_individual(self, generation: int, individual_population: List[NQueens]):
+        worse_individual = NQueens()
+        worse_individual.rate = sys.maxsize * (-1)
+
+        for i in range(len(individual_population)):
+            if individual_population[i].rate > worse_individual.rate:
+                worse_individual = individual_population[i]
+
+        self.view.show_worse_individual(generation, worse_individual)
