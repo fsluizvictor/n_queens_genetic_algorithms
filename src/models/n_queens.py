@@ -4,8 +4,7 @@ from typing import List, Optional
 
 class NQueens(object):
 
-    def __init__(self, amount_queens: Optional[int] = 8, genes: Optional[List[int]] = None, rate: Optional[float] = 0,
-                 is_rated: Optional[bool] = False):
+    def __init__(self, amount_queens: Optional[int] = 8, genes: Optional[List[int]] = None, rate: Optional[float] = 0):
 
         self._amount_queens = amount_queens
         if genes:
@@ -14,7 +13,6 @@ class NQueens(object):
             self._genes = [i for i in range(self._amount_queens)]
         shuffle(self._genes)
         self._rate = rate
-        self._is_rated = is_rated
         self._old_rate = rate
 
     @property
@@ -40,14 +38,6 @@ class NQueens(object):
     @rate.setter
     def rate(self, rate: int):
         self._rate = rate
-
-    @property
-    def is_rated(self):
-        return self._is_rated
-
-    @is_rated.setter
-    def is_rated(self, is_rated: bool):
-        self._is_rated = is_rated
 
     @property
     def old_rate(self):

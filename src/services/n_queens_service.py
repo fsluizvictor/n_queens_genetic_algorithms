@@ -63,6 +63,4 @@ class NQueensService:
         return new_genes
 
     def show_and_update_rate(self, individual: NQueens) -> float:
-        # if not individual.rated:
-        # individual.is_rated = True
         return self.to_rate(individual)

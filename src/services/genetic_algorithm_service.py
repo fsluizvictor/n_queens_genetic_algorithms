@@ -14,7 +14,7 @@ class GeneticAlgorithmService(object):
         self.service = service
         self.view = view
 
-    def execute(self, amount_steps: Optional[int] = 1000, amount_individuals: Optional[int] = 20):
+    def execute(self, amount_steps: Optional[int] = 10000, amount_individuals: Optional[int] = 20):
 
         initial_population = list()
         for i in range(amount_individuals):
